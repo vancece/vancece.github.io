@@ -1,0 +1,153 @@
+ines (141 sloc) 4.33 KB
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>可见权限计算器</title>
+    <script type="text/javascript">
+        let result = 0;
+        window.onload = init;
+
+        // 初始化
+        function init() {
+            result = 0;
+            document.getElementById('result').value = result;
+        }
+        function myToggle(id) {
+            document.getElementById("tips").innerText = "";
+            if (/.*selected/i.test(document.getElementById(id).className)) {
+                result -= calculate2(parseInt(id) - 1);
+                document.getElementById(id).className = "menu-td";
+            } else {
+                result += calculate2(parseInt(id) - 1);
+                document.getElementById(id).className = "menu-td selected";
+            }
+
+            console.log(result);
+            document.getElementById('result').value = result;
+        }
+
+        // 计算二的几次方
+        function calculate2(num) {
+            num = parseInt(num);
+            if (num === 0) {
+                return 1;
+            }
+            --num;
+
+            return 2 << num;
+        }
+
+        // 计算结果
+        function copyResult() {
+            document.getElementById('result').select();
+            document.execCommand("copy");
+            document.getElementById("tips").innerText = "复制成功！";
+        }
+    </script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            padding: 10px 10px;
+            text-align: left;
+            background-color: #125edb;
+            color: white;
+            font-size: 17px;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .contain {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .menu-table {
+            width: 100%;
+            display: table;
+            border-spacing: 10px;
+        }
+
+        .menu-row {
+            margin: 20px;
+            display: table-row;
+            border: 1px solid #dfdfdf;
+        }
+
+        .menu-td {
+            text-align: center;
+            width: 33.33%;
+            display: table-cell;
+            padding: 40px 0;
+            border: 1px solid #dfdfdf;
+            cursor: pointer;
+            transition: all 100ms;
+            border-radius: 10px;
+        }
+
+        .menu-td:hover {
+            border: 1px solid #125edb;
+        }
+
+        .menu-td::selection {
+            background: none;
+        }
+
+        .selected {
+            background-color: #125edb;
+            color: white;
+        }
+
+        #result {
+            border: 1px solid #dfdfdf;
+            padding: 5px 10px;
+            color: grey;
+            border-radius: 5px;
+        }
+
+        .copy-result {
+            background-color: #125edb;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: white;
+            box-shadow: none;
+        }
+
+        #tips {
+            display: inline-block;
+            padding: 0 20px;
+            color: green;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<!--顶部标题栏-->
+<header>定制内容权限计算器</header>
+<div class="contain">
+    <div class="select-menu">
+        <p class="title">分类选择</p>
+        <div class="menu-table">
+            <div class="menu-row">
+                <div class="menu-td" id="1" onclick="myToggle('1')">行业研究</div>
+                <div class="menu-td" id="2" onclick="myToggle('2')">定向猎挖</div>
+                <div class="menu-td" id="3" onclick="myToggle('3')">适配性评估</div>
+            </div>
+            <div class="menu-row">
+                <div class="menu-td" id="4" onclick="myToggle('4')">薪酬调研</div>
+                <div class="menu-td" id="5" onclick="myToggle('5')">行业活动</div>
+                <div class="menu-td" id="6" onclick="myToggle('6')">投资咨询</div>
+            </div>
+        </div>
+        <label>计算结果：<input id="result" value="0"></label>
+        <button class="copy-result" onclick="copyResult()">复制</button>
+        <p id="tips"></p>
+    </div>
+</div>
+</body>
+</html>
